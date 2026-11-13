@@ -1,0 +1,25 @@
+BAKI REMINDER - ACCOUNT SYSTEM IMPLEMENTATION STATUS
+
+Implemented in this source update:
+- Firebase Email/Password sign-up.
+- Firebase Email/Password login.
+- Firebase Auth session persistence (Firebase SDK default behavior).
+- Forgot Password email request.
+- Auth-state based entry: signed-out users see the account screen; signed-in users enter the existing app.
+- Basic Bengali validation and user-facing error messages.
+
+Not implemented in this stage:
+- Firestore user profile creation.
+- Cloud backup / cross-device Baki synchronization.
+- Per-account local database isolation / migration.
+- Sign-out and account switching UI (deferred until local data isolation is implemented to avoid exposing one account's local records to another account on the same device).
+- Admin role and Pro subscription backend.
+
+Firebase Console prerequisite:
+- Authentication > Sign-in method > Email/Password must be Enabled.
+- Existing google-services.json is retained.
+
+Important:
+- This source update has NOT been compiled or run on a physical Android device in this environment.
+- Do not treat the APK bundled in APK_DOWNLOAD as containing these changes; it is the original APK from the uploaded archive.
+- Firestore Rules were not changed or deployed.

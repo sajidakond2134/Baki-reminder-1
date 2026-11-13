@@ -1,0 +1,25 @@
+BAKI REMINDER — STAGE 2 (CLOUD SYNC)
+
+Added in this source package:
+1. Room database migration 2 -> 3; existing local rows are preserved.
+2. Each record now has ownerUid, cloudId (UUID), and updatedAt.
+3. Home list and detail reads are scoped to the Firebase Authentication UID.
+4. Existing unowned local records are claimed by the first account that signs in on this device, then uploaded to that account.
+5. Firestore listener downloads records from users/{uid}/bakis and merges them into Room.
+6. New, edited, collected, and deleted records are synchronized to Firestore.
+7. Firestore writes are queued by the SDK while offline; Room remains the immediate local source.
+8. Logout button added. On account switch, old-account reminder alarms are cancelled and current account local reminders are rescheduled.
+9. INTERNET permission included.
+
+IMPORTANT FIREBASE CONSOLE STEP
+Publish the firestore.rules file included in this ZIP to the SAME Firestore database selected for this Firebase project. The rules restrict reads/writes to users/{uid}/bakis where request.auth.uid == uid. Do not replace the rules with allow read, write: if true.
+
+DATA MIGRATION NOTE
+The first account signed in on a device will receive the old local records that existed before account-scoped storage. Later accounts will not see those records. This is deliberate to prevent accidental sharing between accounts.
+
+LIMITATIONS / TEST REQUIRED
+- This source has not been compiled or run on a physical Android device in this environment. The project ZIP does not include a Gradle wrapper JAR, so a verified APK build could not be performed here.
+- Test two separate accounts and two devices before production release.
+- Firestore sync needs internet for cross-device updates; offline edits remain local and are queued for upload by Firestore.
+- Existing Firestore rules must be published in Firebase Console; including the file in this ZIP does not publish it automatically.
+- Google sign-in is not added to the UI in this stage; email/password remains the implemented account flow.

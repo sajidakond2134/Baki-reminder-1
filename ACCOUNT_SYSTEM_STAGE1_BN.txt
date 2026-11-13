@@ -1,0 +1,20 @@
+BAKI REMINDER — STAGE 1: ACCOUNT AUTHENTICATION
+
+এই Stage 1 source package-এ যুক্ত/রাখা হয়েছে:
+1. Firebase Authentication দিয়ে Email/Password Sign Up
+2. Email/Password Login
+3. Forgot Password — Firebase reset email
+4. Signed-in state listener — আগে লগইন করা থাকলে Firebase session অনুযায়ী অ্যাপের মূল স্ক্রিন খোলে
+5. ইনপুট validation, loading state এবং সাধারণ Firebase error-এর বাংলা বার্তা
+6. আগের Home/Add Baki/Details/Notifications UI ও reminder scheduler source অপরিবর্তিত রাখা হয়েছে
+
+গুরুত্বপূর্ণ সীমাবদ্ধতা:
+- এই Stage 1 শুধু Authentication gate। Baki records এখনো Room local database-এ আছে; Firestore cloud sync ও UID-ভিত্তিক data isolation Stage 2-তে হবে।
+- তাই Stage 2-তে data migration ও per-user isolation সম্পন্ন হওয়ার আগে Logout/account switching যোগ করা হয়নি। তা না হলে একই ফোনে অন্য account লগইন করলে আগের local Baki data দেখা যেতে পারে।
+- Admin/Pro/AmanahAds এই Stage 1-এর অংশ নয়।
+- Firebase Console-এ Email/Password provider enabled থাকতে হবে এবং app-এর google-services.json package name-এর সাথে applicationId মিলতে হবে।
+
+BUILD/TEST STATUS:
+- Source ZIP structure ও Firebase Auth code যাচাই করা হয়েছে।
+- এই environment-এ Gradle wrapper JAR/gradlew নেই; তাই APK build বা emulator/device runtime test করা হয়নি।
+- ব্যবহার করার আগে Android Studio/Google AI Studio-তে Gradle sync ও Debug APK build করে signup, login এবং password reset বাস্তবে পরীক্ষা করতে হবে।

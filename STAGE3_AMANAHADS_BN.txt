@@ -1,0 +1,24 @@
+BAKI REMINDER — STAGE 3: AMANAHADS BANNER INTEGRATION
+
+যা আপডেট করা হয়েছে
+- AmanahAds dashboard থেকে দেওয়া exact JavaScript loader ব্যবহার করা হয়েছে:
+  https://amanahads.com/api/ads/serve.js
+- Dashboard key data-key attribute-এ দেওয়া হয়েছে।
+- Dashboard-এর exact banner container ব্যবহার করা হয়েছে:
+  id="amanah-ad-banner-mobile_banner", data-type="BANNER", data-size="MOBILE_BANNER".
+- Android WebView-তে JavaScript ও DOM storage চালু রেখে 320x50 banner slot দেখানো হয়েছে।
+- Home screen-এর নিচে banner placement রাখা হয়েছে; existing Home UI ও reminder flow পরিবর্তন করা হয়নি।
+- Pro profile Firestore থেকে active এবং future proExpiresAt হলে banner লুকানো হয়। Profile load চলাকালে banner লুকানো থাকে, যাতে Pro user startup-এ ad flash না দেখে। Profile read ব্যর্থ হলে free-user monetization fail-open হিসেবে ad দেখানো হয়।
+
+সীমাবদ্ধতা ও গুরুত্বপূর্ণ সতর্কতা
+- এই build-এ শুধু BANNER / MOBILE_BANNER যুক্ত করা হয়েছে।
+- VIDEO / HALF_PAGE এবং REWARDED / FULLSCREEN এখনো চালু করা হয়নি। Rewarded ad-এর completion/reward callback ও placement logic না জেনে এগুলো চালু করলে ভুলভাবে reward দেওয়া বা ad flow ভাঙার ঝুঁকি আছে।
+- দেওয়া key-টি Development Key; production release-এর আগে AmanahAds dashboard থেকে Production Key নিতে হবে এবং provider-এর app/domain/WebView policy নিশ্চিত করতে হবে।
+- Key APK-তে থাকবে; এটিকে secret/API server credential হিসেবে ধরা যাবে না।
+- Pro subscription fields Android app থেকে লেখা যাবে না; trusted admin/server process দিয়ে update করতে হবে।
+- Ad campaign না থাকলে integration ঠিক থাকলেও banner ফাঁকা থাকতে পারে।
+
+যাচাইয়ের অবস্থা
+- Source ZIP তৈরি ও ZIP integrity check করা হয়েছে।
+- Gradle wrapper script (gradlew) এবং local Gradle executable এই project package-এ নেই; তাই এখানে APK build করা যায়নি।
+- Real device-এ AmanahAds ad delivery পরীক্ষা করা হয়নি। Dashboard-এর Development Key ও active campaign দিয়ে Android phone-এ test করতে হবে।

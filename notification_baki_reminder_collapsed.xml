@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notification_collapsed_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_notification_card"
+    android:gravity="center_vertical"
+    android:padding="14dp">
+
+    <!-- App Icon Squircle -->
+    <ImageView
+        android:id="@+id/notification_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="Baki Reminder Icon"
+        android:src="@drawable/ic_notification_wallet" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical">
+
+        <!-- Title & NOW Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/notification_app_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Baki Reminder"
+                android:textColor="#18271C"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/notification_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NOW"
+                android:textColor="#788B7D"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Main Message: e.g. রহিমের কাছে 100 টাকা বাকি -->
+        <TextView
+            android:id="@+id/notification_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="রহিমের কাছে 100 টাকা বাকি"
+            android:textColor="#18271C"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Subtitle: e.g. সময়: 6 ঘন্টা পর আবার মনে করানো হবে -->
+        <TextView
+            android:id="@+id/notification_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="সময়: 6 ঘন্টা পর আবার মনে করানো হবে"
+            android:textColor="#6C7F72"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

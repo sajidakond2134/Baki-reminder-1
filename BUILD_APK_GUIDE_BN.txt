@@ -1,0 +1,20 @@
+BAKI REMINDER — UPDATED SOURCE PROJECT
+
+কি পরিবর্তন হয়েছে:
+- কোনো UI screen বা design file পরিবর্তন করা হয়নি।
+- প্রতিটি uncollected baki-র AlarmManager alarm fire হওয়ার পর একই interval (যেমন ৬/১২/২৪ ঘণ্টা) দিয়ে পরের alarm স্বয়ংক্রিয়ভাবে schedule হবে।
+- আদায় হয়েছে mark করলে আগের মতো alarm cancel হবে।
+- ফোন restart/app update হলে BootReceiver database থেকে uncollected baki-র alarm restore করবে।
+- আগের অতিরিক্ত daily WorkManager notification trigger সরানো হয়েছে, যাতে duplicate/confusing reminder না আসে।
+
+APK build (কম্পিউটার বা GitHub Actions):
+1. এই ZIP-এর সব ফাইল একটি GitHub repository-র root-এ upload করো (ZIP-টিকে ZIP হিসেবেই repository-তে রেখে নয়; extract করে সব ফাইল root-এ রাখতে হবে)।
+2. Actions tab খুলে “Build Baki Reminder APK” workflow চালাও।
+3. সফল হলে Artifacts থেকে Baki-Reminder-debug-APK ডাউনলোড করো।
+
+গুরুত্বপূর্ণ:
+- এই environment-এ Android SDK/Gradle build চালিয়ে APK compile ও device test করা হয়নি।
+- Android 12+ এ Exact alarm access বন্ধ থাকলে Android inexact fallback ব্যবহার করবে; notification দেরি হতে পারে।
+- Android 13+ এ notification permission দিতে হবে।
+- ফোনের battery/background restrictions এবং নির্মাতার power management-ও delivery-তে প্রভাব ফেলতে পারে।
+- এটি debug APK; Play Store release-এর জন্য আলাদা release signing দরকার।

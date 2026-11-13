@@ -1,0 +1,49 @@
+BAKI REMINDER — STAGE 4 (PRO + MANUAL bKASH + ADMIN DASHBOARD)
+
+এই Stage 4 source package-এ:
+1. ৳39 / 30 দিনের Pro payment request UI যোগ করা হয়েছে।
+2. bKash Send Money নম্বর 01797064737 দেখানো হয়।
+3. User Transaction ID submit করলে backend শুধু PENDING request তৈরি করে।
+4. একই Transaction ID দ্বিতীয়বার জমা দেওয়া আটকানো হয় (SHA-256 document ID + transaction).
+5. Admin Dashboard-এ pending/approved/rejected payment list, overview stats, user search, Pro activate/deactivate আছে।
+6. Approve করলে ৩০ দিন Pro চালু হয়; আগের Pro মেয়াদ থাকলে তার শেষে ৩০ দিন যোগ হয়।
+7. Scheduled backend job প্রতিদিন Asia/Dhaka timezone-এ মেয়াদ শেষ Pro-কে expired করে।
+8. Subscription status client app থেকে পরিবর্তন করা যায় না; Admin callable functions custom claim admin=true যাচাই করে।
+9. Admin action audit log লেখা হয়।
+10. Firestore rules payment request-এ client write বন্ধ করে; profile subscription fields client update করতে পারে না।
+
+গুরুত্বপূর্ণ — এখনো DEPLOY করা হয়নি:
+- Firebase Cloud Functions deploy করতে Firebase project-এ Blaze billing plan এবং billing-enabled project লাগতে পারে। Deploy করার আগে Firebase Console-এ plan/charges দেখে নিন।
+- Admin web app config-এ Firebase Console > Project settings > Your apps থেকে Web App API key ও App ID বসাতে হবে।
+- Admin email mohdsajit998@gmail.com-এর জন্য custom claim একবার সেট করতে হবে। এই ZIP-এ scripts/set-admin-claim.mjs দেওয়া আছে; Google service-account JSON নিজের নিরাপদ কম্পিউটারে রেখে GOOGLE_APPLICATION_CREDENTIALS সেট করে চালাতে হবে। Service-account JSON কখনো APK, ZIP public share, বা browser-এ রাখবেন না।
+- প্রথমে Firebase Authentication-এ admin email-এর account তৈরি করে রাখুন।
+- তারপর Firebase CLI দিয়ে login, project select, functions install/build/deploy, Firestore rules deploy, Hosting deploy করুন।
+- Cloud Functions deploy করার আগে indexes দরকার হলে Firebase CLI error অনুযায়ী index deploy করুন।
+- Admin dashboard deploy হওয়ার পর HTTPS URL থেকে login করুন।
+- bKash payment manual verification: dashboard-এ transaction ID দেখে নিজের bKash account-এ ৳39 receipt মিলিয়ে তারপর Approve চাপুন। শুধু screenshot/ID দেখে টাকা নিশ্চিত না করে approve করবেন না।
+- Customer-এর কাছে টাকা পাঠানোর সময় bKash Send Money charge থাকতে পারে; ৳39 exact receive হওয়া যাচাই করুন।
+- WhatsApp Contact Sales button: 01920777293।
+
+DEPLOYMENT CHECKLIST:
+A) Install Node.js 20+ and Firebase CLI.
+B) Copy .firebaserc.example to .firebaserc (project ID is already filled).
+C) cd functions && npm install && npm run build.
+D) firebase login; firebase use gen-lang-client-0718763764.
+E) firebase deploy --only firestore:rules,functions,hosting.
+F) Configure Web App apiKey and appId in admin-dashboard/app.js; redeploy hosting.
+G) Run the admin-claim script with a protected service-account JSON file. Sign out/in again.
+H) Test with a separate normal user account and a real small test payment before release.
+
+SECURITY:
+- Never set allow read, write: if true.
+- Never put service account JSON or private key in Android assets.
+- Never approve payment from client app.
+- Never treat user-provided Transaction ID as proof of payment.
+- Enable Firebase App Check before production rollout and consider enforcing it in callable functions after testing.
+
+VALIDATION STATUS:
+- ZIP structure and source files created.
+- Corrected Gradle TOML/dependency newline syntax; TOML parsed successfully.
+- Expiry job now processes multiple bounded batches.
+- Backend TypeScript build, Firebase deployment, Android Gradle build, and real bKash transaction have NOT been executed here.
+- The Android UI depends on deployed callable function submitProPayment. Until deploy succeeds, payment submission will fail safely.

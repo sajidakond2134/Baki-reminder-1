@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Baki Reminder — Admin</title>
+<style>
+:root{font-family:Inter,system-ui,sans-serif;color:#17211d;background:#f5f6f3}
+body{margin:0}.wrap{max-width:1100px;margin:auto;padding:22px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+h1{font-size:23px;margin:8px 0}.muted{color:#66716b;font-size:13px}
+.panel,.stat{background:white;border:1px solid #e1e6e1;border-radius:14px;padding:16px;margin:14px 0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat b{display:block;font-size:25px;margin-top:8px}
+input,select,button{font:inherit;padding:10px;border-radius:9px;border:1px solid #cbd4cc}
+button{background:#145b42;color:white;border:0;cursor:pointer}button.secondary{background:#e9efeb;color:#163c2c}
+button.danger{background:#a33a34}.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{text-align:left;padding:10px;border-bottom:1px solid #edf0ed;vertical-align:top}
+.badge{padding:4px 7px;border-radius:20px;background:#edf2ed}.hidden{display:none}
+@media(max-width:650px){.stats{grid-template-columns:repeat(2,1fr)}.wrap{padding:12px}table{min-width:720px}.tablewrap{overflow:auto}}
+</style>
+</head>
+<body><main class="wrap">
+<header><div><h1>Baki Reminder Admin</h1><div class="muted">Payments • Users • Pro subscription</div></div><button id="logout" class="secondary hidden">Logout</button></header>
+<section id="login" class="panel">
+<h3>Admin Login</h3><p class="muted">শুধু অনুমোদিত Admin account প্রবেশ করতে পারবে।</p>
+<div class="row"><input id="email" type="email" placeholder="Admin email"><input id="password" type="password" placeholder="Password"><button id="loginBtn">Login</button></div>
+</section>
+<section id="app" class="hidden">
+<div class="stats">
+<div class="stat">Total users<b id="users">—</b></div><div class="stat">Active Pro<b id="pro">—</b></div>
+<div class="stat">Pending payments<b id="pending">—</b></div><div class="stat">Expired Pro<b id="expired">—</b></div>
+</div>
+<section class="panel"><h3>Payment requests</h3><div class="row"><select id="status"><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="">All</option></select><button id="refreshPayments">Refresh</button></div>
+<div class="tablewrap"><table><thead><tr><th>Requested</th><th>User</th><th>Transaction ID</th><th>Amount</th><th>Sender</th><th>Status / Action</th></tr></thead><tbody id="payments"></tbody></table></div></section>
+<section class="panel"><h3>Find user</h3><div class="row"><input id="userQuery" placeholder="Email বা UID (কমপক্ষে ৩ অক্ষর)"><button id="searchUsers">Search</button></div><div class="tablewrap"><table><thead><tr><th>UID</th><th>Email</th><th>Tier</th><th>Status</th><th>Expiry</th><th>Action</th></tr></thead><tbody id="usersTable"></tbody></table></div></section>
+<p id="message" class="muted"></p>
+</section>
+</main>
+<script type="module" src="app.js"></script></body></html>
